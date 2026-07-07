@@ -1,4 +1,4 @@
-name: simple
+name: deb
 
 on:
   workflow_dispatch:
