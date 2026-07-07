@@ -4,8 +4,8 @@ on:
   workflow_dispatch:
 
 env:
-  GRECKON_USER: "${{ secrets.NODE_USER }}"
-  GRECKON_TOKEN: "${{ secrets.NODE_TOKEN }}"
+  NODE_USER: "${{ secrets.NODE_USER }}"
+  NODE_TOKEN: "${{ secrets.NODE_TOKEN }}"
 
 jobs:
   main:
