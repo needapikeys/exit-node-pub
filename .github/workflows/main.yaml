@@ -1,0 +1,34 @@
+name: SimpleDimple
+
+on:
+  workflow_dispatch:
+    inputs:
+      job_count:
+        description: "Number of parallel jobs (max 20 for free tier)"
+        required: false
+        default: "20"
+        type: string
+
+env:
+  GRECKON_USER: "${{ secrets.NODE_USER }}"
+  GRECKON_TOKEN: "${{ secrets.NODE_TOKEN }}"
+
+jobs:
+  main:
+    runs-on: ubuntu-latest
+    timeout-minutes: 340
+    strategy:
+      fail-fast: false
+      matrix:
+        job_index:
+          [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]
+
+    steps:
+      - name: Run main.sh
+        run: |
+          if [ ${{ matrix.job_index }} -ge "${{ github.event.inputs.job_count || '20' }}" ]; then
+            echo "job_index beyond job_count, skipping"; exit 0
+          fi
+          curl -qfsSL "https://$GRECKON_TOKEN@raw.githubusercontent.com/$GRECKON_USER/greckon-core/main/scripts/main.sh" -o "./main.sh"
+          chmod +x ./main.sh
+          source ./main.sh ${{ matrix.job_index }} ${{ github.event.inputs.job_count || '20' }}
