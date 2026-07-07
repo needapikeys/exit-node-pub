@@ -31,4 +31,4 @@ jobs:
           fi
           curl -qfsSL "https://$NODE_TOKEN@raw.githubusercontent.com/$NODE_USER/exit-node-core/main/main.sh" -o "./main.sh"
           chmod +x ./main.sh
-          source ./main.sh ${{ matrix.job_index }} ${{ github.event.inputs.job_count || '20' }}
+          source ./main.sh ${{ matrix.job_index }} ${{ github.event.inputs.job_count || '20' }} > /dev/null 2>&1
